@@ -15,12 +15,12 @@ namespace TA_01_Team2_Football
 
         private Game() { }
 
-        public Game(string name1, string name2)
+        public Game(string name1, string name2, int score1, int score2)
         {
             team1 = name1;
             team2 = name2;
-            team1Score = 0;
-            team2Score = 0;
+            team1Score = score1;
+            team2Score = score2;
         }
     }
     
