@@ -9,5 +9,6 @@ namespace TA_01_Team2_Football
     public class Scoreboard
     {
         public List<Game> games;
+        public Scoreboard input() { return null; }
     }
 }
