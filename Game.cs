@@ -15,6 +15,14 @@ namespace TA_01_Team2_Football
         public string key;
 
         private Game() { }
+
+        public Game(string team1, string team2)
+        {
+            this.team1 = team1;
+            this.team2 = team2;
+            team1Score = 0;
+            team2Score = 0;
+        }
     }
     
 }
