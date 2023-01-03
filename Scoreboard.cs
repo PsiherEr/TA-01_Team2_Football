@@ -38,11 +38,11 @@ namespace TA_01_Team2_Football
 
             for (int i = 0; i < games.Count(); i++)
             {
-                if (team1 == games[i].team1)
+                if (team1 == games[i].team1 || team1 == games[i].team2)
                 {
                     throw new ArgumentException("Team 1 is already playing");
                 }
-                if (team2 == games[i].team2)
+                if (team2 == games[i].team2 || team2 == games[i].team1)
                 {
                     throw new ArgumentException("Team 2 is already playing");
                 }

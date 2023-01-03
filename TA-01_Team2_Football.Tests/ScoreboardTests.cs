@@ -51,8 +51,8 @@ namespace TA_01_Team2_Football.Tests
             var team1 = "Ukraine";
             var team2 = "England";
 
-            var team3 = "Ukraine";
-            var team4 = "Spain";
+            var team3 = "Spain";
+            var team4 = "Ukraine";
 
             Scoreboard scoreboard = new Scoreboard();
             scoreboard.input(team1, team2);
@@ -61,34 +61,3 @@ namespace TA_01_Team2_Football.Tests
         }
     }
 }
-
-/*
-//Act
-int CountGames = scoreboard.games.Count();
-for (int i = 0; i < CountGames; i++)
-{
-    if (scoreboard.games[i].team1 == scoreboard.games[i].team2)
-    {
-        Assert.True(false);
-    }
-
-    if (scoreboard.games[i].team1 == null || scoreboard.games[i].team2 == null)
-    {
-        Assert.True(false);
-    }
-
-    for (int j = 0; j < CountGames; j++)
-    {
-        if (i != j)
-        {
-            if (scoreboard.games[j].team1 == scoreboard.games[i].team1 && scoreboard.games[j].team2 == scoreboard.games[i].team2)
-            {
-                Assert.True(false);
-            }
-        }
-
-    }
-}
-
-//Assert
-Assert.True(true);*/
