@@ -15,7 +15,7 @@ namespace TA_01_Team2_Football.Tests
         }
         public int GetHashCode(Game g)
         {
-            return g.team1Score + g.team2Score;
+            return (g.team1Score * 33 + 1) + (g.team2Score * 11 + 2);
         }
     }
     public class ScoreboardTests
