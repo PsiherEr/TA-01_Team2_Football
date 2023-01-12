@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +22,23 @@ namespace TA_01_Team2_Football
             this.team2 = team2;
             team1Score = 0;
             team2Score = 0;
+
+        public Game(string team1, string team2, int team1Score, int team2Score)
+        {
+            if (team1 == null || team2 == null)
+            {
+                throw new NullReferenceException();
+            }
+            if(team1Score < 0 || team2Score < 0)
+            {
+                throw new InvalidOperationException();
+            }
+            this.team1 = team1;
+            this.team2 = team2;
+            this.team1Score = team1Score;
+            this.team2Score = team2Score;
+            this.key = team1 + team2;
         }
     }
-    
+
 }
