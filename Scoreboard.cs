@@ -9,9 +9,11 @@ namespace TA_01_Team2_Football
 {
     public class Scoreboard
     {
-
-        public List<Game> games = new List<Game>();
-        //public Scoreboard input() { return null; }
+        public List<Game> games;
+        public Scoreboard()
+        {
+            games = new List<Game>();
+        }
 
         public void input(string team1, string team2)
         {
@@ -53,11 +55,6 @@ namespace TA_01_Team2_Football
             games.Add(game);
             }
             
-        public List<Game> games;
-        public Scoreboard()
-        {
-            games = new List<Game>();
-        }
         private static int CompareListByDecreasing(Game game1,Game game2)
         {
             if ((game1.team1Score + game1.team2Score)<(game2.team1Score + game2.team2Score))
