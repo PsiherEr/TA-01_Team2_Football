@@ -53,7 +53,7 @@ namespace TA_01_Team2_Football
 
             var game = new Game(team1, team2);
             games.Add(game);
-            }
+        }
             
         private static int CompareListByDecreasing(Game game1,Game game2)
         {
