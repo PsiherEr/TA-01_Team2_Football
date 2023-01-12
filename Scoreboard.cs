@@ -123,5 +123,31 @@ namespace TA_01_Team2_Football
 
             return games; 
         }
+
+        public void UpdateScore(Game game, int firstTeamScore, int secondTeamScore)
+        {
+            if (game == null)
+            {
+                throw new NullReferenceException("Game is null");
+            }
+
+            if (firstTeamScore < 0 || secondTeamScore < 0)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (Math.Abs(game.team1Score - firstTeamScore) > 1 || Math.Abs(game.team2Score - secondTeamScore) > 1)
+            {
+                throw new InvalidOperationException("Point cannot change by more than 1 point");
+            }
+
+            if ((Math.Abs(game.team1Score - firstTeamScore) + Math.Abs(game.team2Score - secondTeamScore)) > 1)
+            {
+                throw new InvalidOperationException("All score cannot change by more than 1 point");
+            }
+
+            game.team1Score = firstTeamScore;
+            game.team2Score = secondTeamScore;
+        }
     }
 }
