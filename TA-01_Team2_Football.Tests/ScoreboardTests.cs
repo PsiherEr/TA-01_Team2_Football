@@ -77,8 +77,77 @@ namespace TA_01_Team2_Football.Tests
 
             Assert.Throws<ArgumentException>(() => scoreboard.input(team3, team4));
         }
-        
-        public void TestSummary()
+
+        public void Finish_ArgumentException()
+        {
+            //Arrange
+            Scoreboard scoreboard = new Scoreboard();
+
+            Assert.Throws<ArgumentException>(() => scoreboard.input("", "England"));
+        }
+
+        [Fact]
+        public void Finish_UkraineEngland_ShouldFinishGame()
+        {
+            var team1 = "Ukraine";
+            var team2 = "England";
+
+            Scoreboard scoreboard = new Scoreboard();
+            scoreboard.input(team1, team2);
+            var count = scoreboard.games.Count();
+            scoreboard.finish(team1, team2);
+            Assert.Equal(count - 1, scoreboard.games.Count());
+        }
+
+        [Fact]
+        public void Finish_TheSameTeamNames_Exception()
+        {
+            var team1 = "Ukraine";
+            var team2 = "Ukraine";
+
+            Scoreboard scoreboard = new Scoreboard();
+
+            Assert.Throws<ArgumentException>(() => scoreboard.finish(team1, team2));
+        }
+
+        [Fact]
+        public void Finish_UnwantedSymbolsInTeamName_Exception()
+        {
+            var team1 = "Ukrai-ne";
+            var team2 = "England";
+
+            Scoreboard scoreboard = new Scoreboard();
+
+            Assert.Throws<ArgumentException>(() => scoreboard.finish(team1, team2));
+        }
+
+        [Fact]
+        public void Finish_ListIsEmpty_Exception()
+        {
+            var team1 = "Ukraine";
+            var team2 = "England";
+
+            Scoreboard scoreboard = new Scoreboard();
+
+            Assert.Throws<ArgumentException>(() => scoreboard.finish(team1, team2));
+        }
+
+        [Fact]
+        public void Finish_GameDoesNotExist_Exception()
+        {
+            var team1 = "Ukraine";
+            var team2 = "England";
+            var team3 = "Spain";
+            var team4 = "France";
+
+            Scoreboard scoreboard = new Scoreboard();
+            scoreboard.input(team3, team4);
+
+            Assert.Throws<ArgumentException>(() => scoreboard.finish(team1, team2));
+        }
+
+
+        public void Sort_TestSummary()
         {
             //Arrange
             Scoreboard scoreboard1 = new Scoreboard();
@@ -112,7 +181,7 @@ namespace TA_01_Team2_Football.Tests
         [InlineData("France", null, 5, 3)]
         [InlineData(null, "Argentina", 5, 3)]
         [InlineData(null, null, 5, 3)]
-        public void TestNullGameTeamName(string team1, string team2, int team1Score, int team2Score)
+        public void Sort_TestNullGameTeamName(string team1, string team2, int team1Score, int team2Score)
         {
             Assert.Throws<NullReferenceException>(() => new Game(team1, team2, team1Score, team2Score));
         }
@@ -120,18 +189,18 @@ namespace TA_01_Team2_Football.Tests
         [InlineData("France", "Argentina", -1, 3)]
         [InlineData("France", "Argentina", 5, -5)]
         [InlineData("France", "Argentina", -3, -4)]
-        public void TestNegativeGameTeamScore(string team1, string team2, int team1Score, int team2Score)
+        public void Sort_TestNegativeGameTeamScore(string team1, string team2, int team1Score, int team2Score)
         {
             Assert.Throws<InvalidOperationException>(() => new Game(team1, team2, team1Score, team2Score));
         }
         [Fact]
-        public void TestNullScoreboardList()
+        public void Sort_TestNullScoreboardList()
         {
             Scoreboard scoreboard = new Scoreboard();
             Assert.Throws<IndexOutOfRangeException>(() => scoreboard.sortScoreBoard());
         }
         [Fact]
-        public void TestScoreboardListWithOneElement()
+        public void Sort_TestScoreboardListWithOneElement()
         {
             Scoreboard scoreboard2 = new Scoreboard();
             scoreboard2.games = new List<Game>
@@ -139,6 +208,68 @@ namespace TA_01_Team2_Football.Tests
                 new Game("France", "Argentina", 1, 3)
             };
             Assert.Throws<IndexOutOfRangeException>(() => scoreboard2.sortScoreBoard());
+        }
+
+        //51
+        [Fact]
+        public void UpdateScoreNullReferenceException()
+        {
+            //Arrange
+            Scoreboard scoreboard = new Scoreboard();
+            //Assert
+            Assert.Throws<NullReferenceException>(() => scoreboard.UpdateScore(null, 0, 0));
+        }
+
+        [Theory]
+        [InlineData("France", "Argentina", -1, 3)]
+        [InlineData("France", "Argentina", -3, -2)]
+        [InlineData("France", "Argentina", -1, 0)]
+        public void UpdateScoreNegativeScoreException(string team1, string team2, int team1Score, int team2Score)
+        {
+            //Arrange
+            Scoreboard scoreboard = new Scoreboard();
+
+            //Act
+            scoreboard.input(team1, team2);
+            Game game = scoreboard.games.FirstOrDefault();
+            //Assert
+
+            Assert.Throws<InvalidOperationException>(() => scoreboard.UpdateScore(game, team1Score, team2Score));
+        }
+
+        [Theory]
+        [InlineData("France", "Argentina", 1, 3, -2, 1)]
+        [InlineData("France", "Argentina", 3, 2, 0, 2)]
+        [InlineData("France", "Argentina", 1, 0, 3, 0)]
+        public void UpdatePointChangesGreaterThan1(string team1, string team2, int team1Score, int team2Score, int team1ScoreIncrement, int team2ScoreIncrement)
+        {
+            //Arrange
+            Scoreboard scoreboard = new Scoreboard();
+
+            //Act
+            scoreboard.input(team1, team2);
+            Game game = new Game(team1, team2, team1Score, team2Score);
+            //Assert
+
+            Assert.Throws<InvalidOperationException>(() => scoreboard.UpdateScore(game, team1ScoreIncrement, team2ScoreIncrement));
+        }
+
+        [Theory]
+        [InlineData("France", "Argentina", 1, 3, 1, 1)]
+        [InlineData("France", "Argentina", 1, 1, -1, -1)]
+        [InlineData("France", "Argentina", 2, 1, -1, 1)]
+        [InlineData("France", "Argentina", 1, 3, 1, -1)]
+        public void UpdateScoreChangesGreaterThan1(string team1, string team2, int team1Score, int team2Score, int team1ScoreIncrement, int team2ScoreIncrement)
+        {
+            //Arrange
+            Scoreboard scoreboard = new Scoreboard();
+
+            //Act
+            scoreboard.input(team1, team2);
+            Game game = new Game(team1, team2, team1Score, team2Score);
+            //Assert
+
+            Assert.Throws<InvalidOperationException>(() => scoreboard.UpdateScore(game, team1ScoreIncrement, team2ScoreIncrement));
         }
     }
 }
