@@ -53,7 +53,49 @@ namespace TA_01_Team2_Football
 
             var game = new Game(team1, team2);
             games.Add(game);
+        }
+        
+        public void finish(string team1, string team2)
+        {
+            if (string.IsNullOrEmpty(team1) || string.IsNullOrEmpty(team2))
+            {
+                throw new ArgumentException("Name is null or empty");
             }
+
+            if (team1.ToLower() == team2.ToLower())
+            {
+                throw new ArgumentException("Same names of team");
+            }
+
+            Regex regex = new Regex(@"^[A-Z][a-z0-9]+$");
+            MatchCollection matches1 = regex.Matches(team1);
+            MatchCollection matches2 = regex.Matches(team2);
+            if (matches1.Count == 0)
+            {
+                throw new ArgumentException("Unwanted symbols in team`s 1 name");
+            }
+            if (matches2.Count == 0)
+            {
+                throw new ArgumentException("Unwanted symbols in team`s 2 name");
+            }
+
+            if (games.Count == 0)
+            {
+                throw new ArgumentException("No games");
+            }
+
+            for (int i = 0; i < games.Count(); i++)
+            {
+                if (team1 == games[i].team1 && team2 == games[i].team2)
+                {
+                    games.RemoveAt(i);
+                }
+                else
+                {
+                    throw new ArgumentException("Game does not exist");
+                }
+            }
+        }
             
         private static int CompareListByDecreasing(Game game1,Game game2)
         {
