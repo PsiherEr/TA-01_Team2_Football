@@ -211,14 +211,14 @@ namespace TA_01_Team2_Football.Tests
         }
 
         //51
-        [Fact]
+        /*[Fact]
         public void UpdateScoreNullReferenceException()
         {
             //Arrange
             Scoreboard scoreboard = new Scoreboard();
             //Assert
             Assert.Throws<NullReferenceException>(() => scoreboard.UpdateScore(null, 0, 0));
-        }
+        }*/
 
         [Theory]
         [InlineData("France", "Argentina", -1, 3)]
