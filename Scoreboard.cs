@@ -138,12 +138,12 @@ namespace TA_01_Team2_Football
 
             if (Math.Abs(game.team1Score - firstTeamScore) > 1 || Math.Abs(game.team2Score - secondTeamScore) > 1)
             {
-                throw new InvalidOperationException("Point cannot change by more than 1 point");
+                throw new ArithmeticException("Point cannot change by more than 1 point");
             }
 
             if ((Math.Abs(game.team1Score - firstTeamScore) + Math.Abs(game.team2Score - secondTeamScore)) > 1)
             {
-                throw new InvalidOperationException("All score cannot change by more than 1 point");
+                throw new ArgumentOutOfRangeException("All score cannot change by more than 1 point");
             }
 
             game.team1Score = firstTeamScore;

@@ -238,10 +238,10 @@ namespace TA_01_Team2_Football.Tests
         }
 
         [Theory]
-        [InlineData("France", "Argentina", 1, 3, -2, 1)]
+        [InlineData("France", "Argentina", 2, 3, -2, 1)]
         [InlineData("France", "Argentina", 3, 2, 0, 2)]
         [InlineData("France", "Argentina", 1, 0, 3, 0)]
-        public void UpdatePointChangesGreaterThan1(string team1, string team2, int team1Score, int team2Score, int team1ScoreIncrement, int team2ScoreIncrement)
+        public void UpdateScorePointChangesGreaterThan1(string team1, string team2, int team1Score, int team2Score, int team1ScoreIncrement, int team2ScoreIncrement)
         {
             //Arrange
             Scoreboard scoreboard = new Scoreboard();
@@ -251,15 +251,15 @@ namespace TA_01_Team2_Football.Tests
             Game game = new Game(team1, team2, team1Score, team2Score);
             //Assert
 
-            Assert.Throws<InvalidOperationException>(() => scoreboard.UpdateScore(game, team1ScoreIncrement, team2ScoreIncrement));
+            Assert.Throws<ArithmeticException>(() => scoreboard.UpdateScore(game, team1Score + team1ScoreIncrement, team1Score + team2ScoreIncrement));
         }
 
         [Theory]
         [InlineData("France", "Argentina", 1, 3, 1, 1)]
-        [InlineData("France", "Argentina", 1, 1, -1, -1)]
+        [InlineData("France", "Argentina", 3, 3, -1, -1)]
         [InlineData("France", "Argentina", 2, 1, -1, 1)]
         [InlineData("France", "Argentina", 1, 3, 1, -1)]
-        public void UpdateScoreChangesGreaterThan1(string team1, string team2, int team1Score, int team2Score, int team1ScoreIncrement, int team2ScoreIncrement)
+        public void UpdateScoreAllChangesGreaterThan1(string team1, string team2, int team1Score, int team2Score, int team1ScoreIncrement, int team2ScoreIncrement)
         {
             //Arrange
             Scoreboard scoreboard = new Scoreboard();
@@ -269,7 +269,7 @@ namespace TA_01_Team2_Football.Tests
             Game game = new Game(team1, team2, team1Score, team2Score);
             //Assert
 
-            Assert.Throws<InvalidOperationException>(() => scoreboard.UpdateScore(game, team1ScoreIncrement, team2ScoreIncrement));
+            Assert.Throws<ArgumentOutOfRangeException>(() => scoreboard.UpdateScore(game,team1Score + team1ScoreIncrement, team2Score + team2ScoreIncrement));
         }
     }
 }
